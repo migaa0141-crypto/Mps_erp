@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6d3458">
+<title>МЦ Гал Тогоо ERP</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<section id="loginView" class="login"><div class="loginbox">
+<h1>МЦ Гал Тогоо ERP</h1>
+<div class="muted">Цэс · Технологи карт · Агуулах · ТЭМ шаардах · Тайлан</div>
+<div class="field"><label>Хэрэглэгч</label><input id="loginUser" value="admin"></div>
+<div class="field"><label>Нууц үг</label><input id="loginPass" type="password" value="admin123"></div>
+<button id="loginBtn" class="btn primary" style="width:100%">Нэвтрэх</button>
+<div class="notice">Demo: admin/admin123 · nyarav/1234 · togooch/1234 · manager/1234</div>
+</div></section>
+
+<section id="appView" class="hidden">
+<header class="top"><div class="topin"><div class="brand">МЦ Гал Тогоо ERP</div><div class="spacer"></div><div class="user"><b id="who"></b><br><span id="role"></span></div><button id="logoutBtn" class="btn small">Гарах</button></div>
+<nav class="nav">
+<button class="active" data-page="home">Нүүр</button>
+<button data-page="daily">Өдрийн цэс</button>
+<button data-page="inventory">Агуулах</button>
+<button data-page="requests">ТЭМ шаардах</button>
+<button data-page="transactions">Хөдөлгөөн</button>
+<button data-page="reports">Тайлан</button>
+<button data-page="tech">Технологи</button>
+</nav></header>
+
+<main class="wrap"><div id="msg"></div>
+
+<section id="home" class="page active">
+<div class="modulegrid">
+<button class="module" data-go="daily"><div class="icon">📅</div><b>Өдрийн төлөвлөлт</b><span>14 хоногийн цэс автоматаар</span></button>
+<button class="module" data-go="inventory"><div class="icon">📦</div><b>Агуулах</b><span>Үлдэгдэл, орлого, зарлага</span></button>
+<button class="module" data-go="requests"><div class="icon">🧾</div><b>ТЭМ шаардах</b><span>Автомат хүсэлт, батлах урсгал</span></button>
+<button class="module" data-go="reports"><div class="icon">📊</div><b>Тайлан</b><span>14 хоног / сар / дурын хугацаа</span></button>
+<button class="module" data-go="tech"><div class="icon">🍲</div><b>Технологи карт</b><span>Хоол, салат, сүүн хоол</span></button>
+<button class="module" data-go="transactions"><div class="icon">🔄</div><b>Хөдөлгөөн</b><span>Хэн, хэзээ, юу өөрчилсөн</span></button>
+</div>
+<div class="grid4" style="margin-top:12px">
+<div class="kpi"><span>Нийт ТЭМ</span><b id="kMat">0</b></div>
+<div class="kpi"><span>Дутуу ТЭМ</span><b id="kLow">0</b></div>
+<div class="kpi"><span>Өнөөдрийн порц</span><b id="kPortions">0</b></div>
+<div class="kpi"><span>Хүлээгдэж буй хүсэлт</span><b id="kReq">0</b></div>
+</div>
+</section>
+
+<section id="daily" class="page">
+<div class="card"><div class="row"><div><label class="mini">Огноо</label><input id="planDate" type="date"></div><button id="loadPlanBtn" class="btn">Өдрөө нээх</button><button id="confirmPlanBtn" class="btn good">Олголт батлах / шинэчлэх</button></div><div id="cycleLabel" class="notice"></div></div>
+<div class="mealgrid">
+<div class="meal"><h3>Өглөө</h3><label class="mini">Нийт хүн</label><input id="peopleBreakfast" type="number" min="0"><div id="menuBreakfast"></div><button class="btn small" data-addmeal="breakfast">+ Нэмэлт</button></div>
+<div class="meal"><h3>Өдөр</h3><label class="mini">Нийт хүн</label><input id="peopleLunch" type="number" min="0"><div id="menuLunch"></div><button class="btn small" data-addmeal="lunch">+ Нэмэлт</button></div>
+<div class="meal"><h3>Орой</h3><label class="mini">Нийт хүн</label><input id="peopleDinner" type="number" min="0"><div id="menuDinner"></div><button class="btn small" data-addmeal="dinner">+ Нэмэлт</button></div>
+<div class="meal"><h3>Шөнө</h3><label class="mini">Нийт хүн</label><input id="peopleNight" type="number" min="0"><div id="menuNight"></div><button class="btn small" data-addmeal="night">+ Нэмэлт</button></div>
+</div>
+<div class="card"><h3>ТЭМ хэрэгцээ</h3><div id="planPreview"></div></div>
+</section>
+
+<section id="inventory" class="page">
+<div class="card"><div class="row"><input id="invSearch" placeholder="ТЭМ нэр эсвэл код хайх"><select id="invCat"></select><button id="manualTxnBtn" class="btn primary">+ Орлого / зарлага</button></div></div>
+<div class="tablewrap"><table><thead><tr><th>Код</th><th>Нэр</th><th>Ангилал</th><th>Нэгж</th><th class="num">Үлдэгдэл</th><th class="num">14 хоног</th><th class="num">Дутуу</th></tr></thead><tbody id="invBody"></tbody></table></div>
+</section>
+
+<section id="requests" class="page">
+<div class="card">
+<div class="row"><button id="newAutoReqBtn" class="btn primary">+ Маргаашийн ТЭМ хүсэлт автоматаар</button><input id="reqSearch" placeholder="Хүсэлт, бараа, хэрэглэгчээр хайх"></div>
+</div>
+<div id="requestList" class="list"></div>
+</section>
+
+<section id="transactions" class="page">
+<div class="card"><input id="txnSearch" placeholder="ТЭМ, төрөл, хэрэглэгчээр хайх"></div>
+<div class="tablewrap"><table><thead><tr><th>Огноо</th><th>Төрөл</th><th>ТЭМ</th><th class="num">Хэмжээ</th><th>Нэгж</th><th>Хэрэглэгч</th><th>Тайлбар</th></tr></thead><tbody id="txnBody"></tbody></table></div>
+</section>
+
+<section id="reports" class="page">
+<div class="card"><div class="row"><select id="reportPreset"><option value="14">Сүүлийн 14 хоног</option><option value="month">Энэ сар</option><option value="custom">Өөр хугацаа</option></select><input id="reportFrom" type="date"><input id="reportTo" type="date"><button id="runReportBtn" class="btn primary">Тайлан гаргах</button><button id="exportReportBtn" class="btn">CSV татах</button></div></div>
+<div class="grid4"><div class="kpi"><span>Нийт хүн</span><b id="rPeople">0</b></div><div class="kpi"><span>Нийт порц</span><b id="rPortions">0</b></div><div class="kpi"><span>ТК зарлага</span><b id="rAuto">0</b></div><div class="kpi"><span>Акт / хаягдал</span><b id="rWaste">0</b></div></div>
+<div class="card"><h3>Их зарцуулсан ТЭМ</h3><div id="rTop" class="list"></div></div>
+<div class="card"><h3>Өдрөөр</h3><div id="rDaily"></div></div>
+</section>
+
+<section id="tech" class="page">
+<div class="card"><div class="row"><input id="dishSearch" placeholder="Хоолны нэрээр шууд хайх"><select id="dishCat"></select></div></div>
+<div id="dishList" class="list"></div>
+</section>
+</main></section>
+
+<div id="txnModal" class="modal"><div class="box"><h3>Агуулахын хөдөлгөөн</h3><div class="formgrid"><label>ТЭМ<select id="tMat"></select></label><label>Төрөл<select id="tType"><option value="IN">Орлого</option><option value="OUT">Зарлага</option><option value="WASTE">Акт / хаягдал</option><option value="ADJUST">Тооллогын тохируулга</option></select></label><label>Хэмжээ<input id="tQty" type="number" step="any"></label><label>Тайлбар<input id="tNote"></label></div><div class="row" style="margin-top:12px"><button id="saveTxnBtn" class="btn primary">Хадгалах</button><button class="btn" data-close="txnModal">Болих</button></div></div></div>
+
+<div id="reqModal" class="modal"><div class="box"><h3 id="reqTitle">ТЭМ шаардах хүсэлт</h3><div class="request-head"><label>Салбар<input id="rqBranch" value="Цемент - МАК Прайм Сервис"></label><label>Агуулах<input id="rqWarehouse" value="Хүнс"></label><label>Товлосон огноо<input id="rqDate" type="date"></label></div><label class="mini" style="margin-top:8px">Тайлбар</label><textarea id="rqNote" rows="2"></textarea><div id="rqLines" style="margin-top:10px"></div><div class="request-actions" style="margin-top:12px"><button id="submitReqBtn" class="btn primary">Илгээх</button><button id="approveReqBtn" class="btn good">Батлах</button><button id="rejectReqBtn" class="btn bad">Буцаах</button><button id="fulfillReqBtn" class="btn warn">Олгосон болгох</button><button class="btn" data-close="reqModal">Хаах</button></div></div></div>
+
+<div id="recipeModal" class="modal"><div class="box"><h3 id="recipeTitle"></h3><div id="recipeBody"></div><button class="btn" data-close="recipeModal">Хаах</button></div></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body></html>
