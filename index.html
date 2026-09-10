@@ -9,9 +9,9 @@
 </head>
 <body>
 <section id="loginView" class="login"><div class="loginbox">
-<h1>МЦ Гал Тогоо ERP</h1>
+<img src="mak-logo.jpeg" class="loginLogo" alt="MAK"><h1>МЦ Гал Тогоо ERP</h1>
 <div class="muted">Цэс · Технологи карт · Агуулах · ТЭМ шаардах · Тайлан</div>
-<div class="field"><label>Хэрэглэгч</label><input id="loginUser" value="admin"></div>
+<div class="field"><label>Хэрэглэгч / И-мэйл</label><input id="loginUser" value="admin" autocomplete="username"></div>
 <div class="field"><label>Нууц үг</label><input id="loginPass" type="password" value="admin123"></div>
 <button id="loginBtn" class="btn primary" style="width:100%">Нэвтрэх</button>
 <div class="notice">Demo: admin/admin123 · nyarav/1234 · togooch/1234 · manager/1234</div>
@@ -27,6 +27,7 @@
 <button data-page="transactions">Хөдөлгөөн</button>
 <button data-page="reports">Тайлан</button>
 <button data-page="tech">Технологи</button>
+<button id="settingsNav" data-page="settings">Тохиргоо</button>
 </nav></header>
 
 <main class="wrap"><div id="msg"></div>
@@ -61,7 +62,7 @@
 
 <section id="inventory" class="page">
 <div class="card"><div class="row"><input id="invSearch" placeholder="ТЭМ нэр эсвэл код хайх"><select id="invCat"></select><button id="manualTxnBtn" class="btn primary">+ Орлого / зарлага</button></div></div>
-<div class="tablewrap"><table><thead><tr><th>Код</th><th>Нэр</th><th>Ангилал</th><th>Нэгж</th><th class="num">Үлдэгдэл</th><th class="num">14 хоног</th><th class="num">Дутуу</th></tr></thead><tbody id="invBody"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>№</th><th>Код</th><th>Нэр</th><th>Ангилал</th><th>Нэгж</th><th class="num">Үлдэгдэл</th><th class="num">14 хоног</th><th class="num">Дутуу</th></tr></thead><tbody id="invBody"></tbody></table></div>
 </section>
 
 <section id="requests" class="page">
@@ -87,11 +88,30 @@
 <div class="card"><div class="row"><input id="dishSearch" placeholder="Хоолны нэрээр шууд хайх"><select id="dishCat"></select></div></div>
 <div id="dishList" class="list"></div>
 </section>
+
+<section id="settings" class="page">
+<div class="card"><div class="sectionhead"><div><h3>Админ тохиргоо</h3><div class="muted">Хэрэглэгч, эрх, ТЭМ хүсэлт болон системийн үндсэн хяналт.</div></div></div></div>
+<div class="grid4">
+<div class="kpi"><span>Нийт хэрэглэгч</span><b id="uTotal">0</b></div>
+<div class="kpi"><span>Идэвхтэй</span><b id="uActive">0</b></div>
+<div class="kpi"><span>Админ</span><b id="uAdmin">0</b></div>
+<div class="kpi"><span>Нийт хүсэлт</span><b id="uReq">0</b></div>
+</div>
+<div class="card"><h3>Шинэ хэрэглэгч нэмэх</h3><div class="formgrid">
+<label>Нэр<input id="newUserName" placeholder="Жишээ: Бат"></label>
+<label>И-мэйл<input id="newUserEmail" type="email" placeholder="name@company.mn"></label>
+<label>Нэвтрэх нэр<input id="newUserLogin" placeholder="bat"></label>
+<label>Нууц үг<input id="newUserPass" type="password" placeholder="••••••"></label>
+<label>Эрх<select id="newUserRole"><option value="cook">Тогооч</option><option value="warehouse">Нярав</option><option value="viewer">Удирдлага / харах</option><option value="admin">Админ</option></select></label>
+</div><button id="addUserBtn" class="btn primary" style="margin-top:10px">+ Хэрэглэгч нэмэх</button></div>
+<div class="card"><h3>Хэрэглэгчийн жагсаалт</h3><div id="userList" class="list"></div></div>
+<div class="notice">Анхаарах: энэ хувилбар хэрэглэгчдийг тухайн төхөөрөмжийн browser-д хадгална. Жинхэнэ и-мэйл бүртгэл, олон төхөөрөмж дээр нэг хэрэглэгчээр нэвтрэхийн тулд Supabase/Auth-тай холбох дараагийн шат хэрэгтэй.</div>
+</section>
 </main></section>
 
 <div id="txnModal" class="modal"><div class="box"><h3>Агуулахын хөдөлгөөн</h3><div class="formgrid"><label>ТЭМ<select id="tMat"></select></label><label>Төрөл<select id="tType"><option value="IN">Орлого</option><option value="OUT">Зарлага</option><option value="WASTE">Акт / хаягдал</option><option value="ADJUST">Тооллогын тохируулга</option></select></label><label>Хэмжээ<input id="tQty" type="number" step="any"></label><label>Тайлбар<input id="tNote"></label></div><div class="row" style="margin-top:12px"><button id="saveTxnBtn" class="btn primary">Хадгалах</button><button class="btn" data-close="txnModal">Болих</button></div></div></div>
 
-<div id="reqModal" class="modal"><div class="box"><h3 id="reqTitle">ТЭМ шаардах хүсэлт</h3><div class="request-head"><label>Салбар<input id="rqBranch" value="Цемент - МАК Прайм Сервис"></label><label>Агуулах<input id="rqWarehouse" value="Хүнс"></label><label>Товлосон огноо<input id="rqDate" type="date"></label></div><label class="mini" style="margin-top:8px">Тайлбар</label><textarea id="rqNote" rows="2"></textarea><div id="rqLines" style="margin-top:10px"></div><div class="request-actions" style="margin-top:12px"><button id="copyReqBtn" class="btn">📋 MAK ERP-д хуулах</button><button id="submitReqBtn" class="btn primary">Илгээх / батлуулах</button><button id="approveReqBtn" class="btn good">Батлах</button><button id="rejectReqBtn" class="btn bad">Буцаах</button><button id="fulfillReqBtn" class="btn warn">Олгосон болгох</button><button class="btn" data-close="reqModal">Хаах</button></div></div></div>
+<div id="reqModal" class="modal"><div class="box"><h3 id="reqTitle">ТЭМ шаардах хүсэлт</h3><div class="request-head"><label>Салбар<input id="rqBranch" value="Цемент - МАК Прайм Сервис"></label><label>Агуулах<input id="rqWarehouse" value="Хүнс"></label><label>Товлосон огноо<input id="rqDate" type="date"></label></div><label class="mini" style="margin-top:8px">Тайлбар</label><textarea id="rqNote" rows="2"></textarea><div id="rqLines" style="margin-top:10px"></div><div class="request-actions" style="margin-top:12px"><button id="copyReqBtn" class="btn">📋 MAK ERP-д хуулах</button><button id="downloadReqBtn" class="btn">⬇️ Excel/CSV</button><button id="saveReqBtn" class="btn primary">Өөрчлөлт хадгалах</button><button id="submitReqBtn" class="btn primary">Илгээх / батлуулах</button><button id="approveReqBtn" class="btn good">Батлах</button><button id="rejectReqBtn" class="btn bad">Буцаах</button><button id="fulfillReqBtn" class="btn warn">Олгосон болгох</button><button class="btn" data-close="reqModal">Хаах</button></div></div></div>
 
 <div id="recipeModal" class="modal"><div class="box"><h3 id="recipeTitle"></h3><div id="recipeBody"></div><button class="btn" data-close="recipeModal">Хаах</button></div></div>
 
