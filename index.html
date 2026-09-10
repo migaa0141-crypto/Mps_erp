@@ -56,7 +56,7 @@
 <div class="meal"><h3>Орой</h3><label class="mini">Нийт хүн</label><input id="peopleDinner" type="number" min="0"><div id="menuDinner"></div><button class="btn small" data-addmeal="dinner">+ Нэмэлт</button></div>
 <div class="meal"><h3>Шөнө</h3><label class="mini">Нийт хүн</label><input id="peopleNight" type="number" min="0"><div id="menuNight"></div><button class="btn small" data-addmeal="night">+ Нэмэлт</button></div>
 </div>
-<div class="card"><h3>ТЭМ хэрэгцээ</h3><div id="planPreview"></div></div>
+<div class="card"><div class="sectionhead"><div><h3>ТЭМ хэрэгцээ</h3><div class="muted">MAK кодоор, ангиллын дарааллаар. “Шаардах” = хэрэгцээ − агуулахын үлдэгдэл.</div></div></div><div id="planPreview"></div></div>
 </section>
 
 <section id="inventory" class="page">
@@ -66,7 +66,7 @@
 
 <section id="requests" class="page">
 <div class="card">
-<div class="row"><button id="newAutoReqBtn" class="btn primary">+ Маргаашийн ТЭМ хүсэлт автоматаар</button><input id="reqSearch" placeholder="Хүсэлт, бараа, хэрэглэгчээр хайх"></div>
+<div class="row"><button id="newAutoReqBtn" class="btn primary">+ Маргаашийн ТЭМ хүсэлт тооцоолж харах</button><input id="reqSearch" placeholder="Хүсэлт, бараа, хэрэглэгчээр хайх"></div>
 </div>
 <div id="requestList" class="list"></div>
 </section>
@@ -91,7 +91,7 @@
 
 <div id="txnModal" class="modal"><div class="box"><h3>Агуулахын хөдөлгөөн</h3><div class="formgrid"><label>ТЭМ<select id="tMat"></select></label><label>Төрөл<select id="tType"><option value="IN">Орлого</option><option value="OUT">Зарлага</option><option value="WASTE">Акт / хаягдал</option><option value="ADJUST">Тооллогын тохируулга</option></select></label><label>Хэмжээ<input id="tQty" type="number" step="any"></label><label>Тайлбар<input id="tNote"></label></div><div class="row" style="margin-top:12px"><button id="saveTxnBtn" class="btn primary">Хадгалах</button><button class="btn" data-close="txnModal">Болих</button></div></div></div>
 
-<div id="reqModal" class="modal"><div class="box"><h3 id="reqTitle">ТЭМ шаардах хүсэлт</h3><div class="request-head"><label>Салбар<input id="rqBranch" value="Цемент - МАК Прайм Сервис"></label><label>Агуулах<input id="rqWarehouse" value="Хүнс"></label><label>Товлосон огноо<input id="rqDate" type="date"></label></div><label class="mini" style="margin-top:8px">Тайлбар</label><textarea id="rqNote" rows="2"></textarea><div id="rqLines" style="margin-top:10px"></div><div class="request-actions" style="margin-top:12px"><button id="submitReqBtn" class="btn primary">Илгээх</button><button id="approveReqBtn" class="btn good">Батлах</button><button id="rejectReqBtn" class="btn bad">Буцаах</button><button id="fulfillReqBtn" class="btn warn">Олгосон болгох</button><button class="btn" data-close="reqModal">Хаах</button></div></div></div>
+<div id="reqModal" class="modal"><div class="box"><h3 id="reqTitle">ТЭМ шаардах хүсэлт</h3><div class="request-head"><label>Салбар<input id="rqBranch" value="Цемент - МАК Прайм Сервис"></label><label>Агуулах<input id="rqWarehouse" value="Хүнс"></label><label>Товлосон огноо<input id="rqDate" type="date"></label></div><label class="mini" style="margin-top:8px">Тайлбар</label><textarea id="rqNote" rows="2"></textarea><div id="rqLines" style="margin-top:10px"></div><div class="request-actions" style="margin-top:12px"><button id="copyReqBtn" class="btn">📋 MAK ERP-д хуулах</button><button id="submitReqBtn" class="btn primary">Илгээх / батлуулах</button><button id="approveReqBtn" class="btn good">Батлах</button><button id="rejectReqBtn" class="btn bad">Буцаах</button><button id="fulfillReqBtn" class="btn warn">Олгосон болгох</button><button class="btn" data-close="reqModal">Хаах</button></div></div></div>
 
 <div id="recipeModal" class="modal"><div class="box"><h3 id="recipeTitle"></h3><div id="recipeBody"></div><button class="btn" data-close="recipeModal">Хаах</button></div></div>
 
